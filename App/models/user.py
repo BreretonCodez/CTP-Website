@@ -1,19 +1,24 @@
 from werkzeug.security import check_password_hash, generate_password_hash
 from App.database import db
+from flask_login import UserMixin, LoginManager
 
-class User(db.Model):
+login_manager = LoginManager()
+
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    username =  db.Column(db.String, nullable=False)
+    name = db.Column(db.String, nullable=True)
+    email =  db.Column(db.String, nullable=False)
     password = db.Column(db.String(120), nullable=False)
 
-    def __init__(self, username, password):
-        self.username = username
+    def __init__(self, email, password):
+        self.email = email
         self.set_password(password)
 
     def toJSON(self):
         return{
             'id': self.id,
-            'username': self.username
+            'name': self.name,
+            'email': self.email
         }
 
     def set_password(self, password):
@@ -24,3 +29,11 @@ class User(db.Model):
         """Check hashed password."""
         return check_password_hash(self.password, password)
 
+    # def get_id()
+    # def is_active()
+    # def is_anonymous()
+    # def is_authenticated()
+
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(int(id))

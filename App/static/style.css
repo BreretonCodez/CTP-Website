@@ -1,0 +1,12 @@
+body {
+    background-color: azure;
+}
+
+.login-card {
+    background-color: beige;
+}
+
+.card-position {
+    margin-top: 25vh;
+    padding-top: 25vh;
+}
