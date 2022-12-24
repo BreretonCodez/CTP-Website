@@ -1,1 +1,196 @@
-<h1>No cap</h1>
+{% extends "/auth/layout.html" %}
+{% block title %} Dashboard | Phoenix Management App{% endblock %}
+{% block page %}Dashboard{% endblock %}
+
+{{ super() }}
+
+{% block breadcrumbs %}
+<li class="breadcrumb-item active">Dashboard</li>
+{% endblock %}
+
+{% block user_sidebar %}
+<div class="user-panel mt-3 pb-3 mb-3 d-flex">
+    <div class="image">
+      <img src="{{ url_for('static', filename='/imgs/user-icon-vector.jpg') }}" class="img-circle elevation-2" alt="User Image">
+    </div>
+    <div class="info">
+      {% if user.fname == None %}
+      <a href="#" class="d-block">John Doe</a>
+      {% else %}
+      <a href="#" class="d-block">{{ user.fname }} {{ user.lname }} </a>
+      {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block sidebar_menu%}
+<nav class="mt-2">
+  <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+    <!-- Add icons to the links using the .nav-icon class
+         with font-awesome or any other icon font library -->
+    <li class="nav-item">
+      <a href="/profile/@{{ user.username }}" class="nav-link active">
+        <i class="nav-icon fas fa-tachometer-alt"></i>
+        <p>Dashboard</p>
+      </a>
+    </li>
+    <li class="nav-item menu-open">
+      <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+          Products
+          <i class="right fas fa-angle-left"></i>
+        </p>
+      </a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item">
+          <a href="/profile/@{{ user.username }}/publications" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>All Products</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/profile/@{{ user.username }}/publication/add" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Add New Product</p>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-item menu-open">
+      <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-cog"></i>
+        <p>
+          Settings
+          <i class="right fas fa-angle-left"></i>
+        </p>
+      </a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item">
+          <a href="/profile/@{{ user.username }}/edit" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Profile</p>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-item mt-3 pb-3 mb-3">
+      <a href="/" class="nav-link">
+        <i class="nav-icon fas fa-star"></i>
+        <p>Main Site</p>
+      </a>
+    </li>
+  </ul>
+</nav>
+{% endblock %}
+
+{% block user_dash %}
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+    <!-- Small boxes (Stat box) -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+          <div class="inner">
+            <p>Publications</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-bag"></i>
+          </div>
+          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-success">
+          <div class="inner">
+            <h3>3</h3>
+            <p>Co-Authors</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-stats-bars"></i>
+          </div>
+          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-warning">
+          <div class="inner">
+            <h3>0</h3>
+
+            <p>Publication Reads</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-person-add"></i>
+          </div>
+          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-danger">
+          <div class="inner">
+            <h3>0</h3>
+
+            <p>Profile Views</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-pie-graph"></i>
+          </div>
+          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-6">
+        <h3>Latest Publication</h3>
+        {% for prod in prods[-3:] %}
+        <div class="card card-primary card-outline">
+          <div class="card-body">
+            <h4 class="card-title text-lg"> <span class="fa fa-book text-lg"> {{ prod.name }} </span> </h4>
+            <br>
+            <p class="card-text">
+              {{ prod.desc }}
+            </p>
+        
+            <a href="" class="card-link"> {{ prod.cost }} </a>
+            <a href="" class="card-link"> {{ prod.stock }} </a>
+            <a href="/product/{{ prod.prodId }}/edit" class="card-link btn btn-primary"> Edit </a>
+            <a href="" class="card-link btn btn-danger">Delete</a>
+            
+          </div>
+        </div>
+      {% endfor %}
+
+        <!-- /.card -->
+      </div>
+      <!-- /.col-md-6 -->
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="m-0">Quick Start</h5>
+          </div>
+          <div class="card-body">
+            <h6 class="card-title">This will get you up and running!</h6>
+            <br>
+            <ul>
+              <li>Verify your email!</li>
+              <li>Add a profile picture!</li>
+              <li>Add a test publication!</li>
+              <li>Update your test publication!</li>
+              <li>Delete your test publication!</li>
+            </ul>
+            <a href="#" class="btn btn-primary">Get Started!</a>
+          </div>
+        </div>
+      </div>
+      <!-- /.col-md-6 -->
+    </div>
+    <!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+{% endblock %}

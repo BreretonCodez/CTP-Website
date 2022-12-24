@@ -13,15 +13,20 @@ from App.database import db
 app = create_app()
 migrate = get_migrate(app)
 
-# This command creates and initializes the database
+# Application Commands
+
 @app.cli.command("init", help="Creates and initializes the database")
 def initialize():
     create_db(app)
     print('database intialized')
 
-'''
-User Commands
-'''
+@app.cli.command("setup", help="Initializes base values into the database")
+def setup():
+    create_user("app@example.com", "masterPass123!")
+    print('database setup')
+
+
+# User Commands
 
 # Commands can be organized using groups
 
