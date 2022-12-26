@@ -3,8 +3,8 @@
 
 ![Tests](https://github.com/BreretonCodez/management-app/actions/workflows/dev.yml/badge.svg)
 
-# Flask MVC Template
-A template for flask applications structured in the Model View Controller pattern [Demo](https://dcit-flaskmvc.herokuapp.com/). [Postman Collection](https://documenter.getpostman.com/view/583570/2s83zcTnEJ)
+# Flask MVC Template with Login
+A template for flask web applications structured in the Model View Controller pattern with an implementend login feature for faster turnover.
 
 
 # Dependencies
@@ -177,4 +177,4 @@ If you are running into errors in gitpod when updateding your github actions fil
 
 ## Database Issues
 
-If you are adding models you may need to migrate the database with the commands given in the previous database migration section. Alternateively you can delete you database file.
+If you are adding models you may need to migrate the database with the commands given in the previous database migration section. Alternateively you can delete your database file.
